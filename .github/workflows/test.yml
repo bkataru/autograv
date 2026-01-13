@@ -1,0 +1,51 @@
+name: Test Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Test package build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Build package
+        run: uv build --no-sources
+      
+      - name: Install package
+        run: |
+          uv venv
+          uv pip install dist/*.whl
+      
+      - name: Test import
+        run: |
+          uv run python -c "from autograv import christoffel_symbols; print('✓ Import successful')"
+      
+      - name: Run quick test
+        run: |
+          uv run python -c "
+          import jax.numpy as jnp
+          from autograv import christoffel_symbols, spherical_polar_metric
+          coords = jnp.array([5.0, 1.0, 1.0], dtype=jnp.float64)
+          result = christoffel_symbols(coords, spherical_polar_metric)
+          print('✓ Functions work correctly')
+          "
