@@ -92,16 +92,23 @@ if [ -d "zig-out/lib" ]; then
     ls -lh zig-out/lib/
     echo
     
-    # Determine library file name based on OS
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        LIB_FILE="zig-out/lib/libautograv_core.so"
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-        LIB_FILE="zig-out/lib/libautograv_core.dylib"
-    elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
-        LIB_FILE="zig-out/lib/autograv_core.dll"
-    else
-        LIB_FILE=""
-    fi
+    # Determine library file name based on OS using uname
+    OS_TYPE=$(uname -s)
+    case "$OS_TYPE" in
+        Linux*)
+            LIB_FILE="zig-out/lib/libautograv_core.so"
+            ;;
+        Darwin*)
+            LIB_FILE="zig-out/lib/libautograv_core.dylib"
+            ;;
+        MINGW*|MSYS*|CYGWIN*)
+            LIB_FILE="zig-out/lib/autograv_core.dll"
+            ;;
+        *)
+            LIB_FILE=""
+            echo "⚠ Warning: Unknown OS type: $OS_TYPE"
+            ;;
+    esac
     
     if [ -n "$LIB_FILE" ] && [ -f "$LIB_FILE" ]; then
         SIZE=$(du -h "$LIB_FILE" | cut -f1)

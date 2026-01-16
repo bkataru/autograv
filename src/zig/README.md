@@ -24,8 +24,10 @@ Zig was chosen for the core implementation because:
 
 ### Prerequisites
 
-- Zig 0.11.0 or newer: https://ziglang.org/download/
-- Python 3.11+ (for Python bindings)
+- Zig 0.11.0 or 0.12.0 (tested versions)
+  - Download: https://ziglang.org/download/
+  - Verify: `zig version`
+  - Note: Other versions may work but are untested
 
 ### Build the Zig Library
 

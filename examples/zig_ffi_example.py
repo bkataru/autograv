@@ -145,19 +145,26 @@ def main():
     A_large = np.random.randn(n, n).astype(np.float64)
     B_large = np.random.randn(n, n).astype(np.float64)
     
-    # Time Zig implementation
+    # Warm-up runs
+    for _ in range(3):
+        _ = matrix_multiply(A_large, B_large)
+        _ = A_large @ B_large
+    
+    # Time Zig implementation with more iterations for statistical significance
+    iterations = 100
     start = time.perf_counter()
-    for _ in range(10):
+    for _ in range(iterations):
         C_zig = matrix_multiply(A_large, B_large)
-    zig_time = (time.perf_counter() - start) / 10
+    zig_time = (time.perf_counter() - start) / iterations
     
     # Time NumPy implementation
     start = time.perf_counter()
-    for _ in range(10):
+    for _ in range(iterations):
         C_numpy = A_large @ B_large
-    numpy_time = (time.perf_counter() - start) / 10
+    numpy_time = (time.perf_counter() - start) / iterations
     
     print(f"Matrix size: {n}×{n}")
+    print(f"Iterations: {iterations}")
     print(f"Zig implementation:   {zig_time*1000:.3f} ms")
     print(f"NumPy implementation: {numpy_time*1000:.3f} ms")
     print(f"Speedup: {numpy_time/zig_time:.2f}x")

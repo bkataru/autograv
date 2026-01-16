@@ -36,6 +36,9 @@ export fn matrix_multiply(
 }
 
 /// Matrix inversion using Gauss-Jordan elimination
+/// PLACEHOLDER: This is a simplified placeholder implementation
+/// Currently only validates that the matrix is square and non-singular
+/// Full implementation TODO: Implement complete Gauss-Jordan with pivoting
 /// Returns 0 on success, non-zero on failure
 export fn matrix_inverse(
     input: *const Matrix,
@@ -46,27 +49,32 @@ export fn matrix_inverse(
 
     const n = input.rows;
     
+    // TODO: This is a PLACEHOLDER - not a real inversion
     // Copy input to output as working matrix
     var i: usize = 0;
     while (i < n * n) : (i += 1) {
         output.data[i] = input.data[i];
     }
 
-    // Create identity matrix in temporary space
-    // Note: In production, this would need proper memory allocation
-    // For now, we assume output has space for augmented matrix
-    
-    // Simple error for non-invertible matrices
-    // In production, this would implement full Gauss-Jordan
+    // Simple validation for non-invertible matrices
+    // NOTE: This only checks diagonal elements, which is incorrect
+    // for general matrices. This is a limitation of the current
+    // placeholder implementation.
     var det: f64 = 1.0;
     i = 0;
     while (i < n) : (i += 1) {
         det *= input.data[i * n + i];
     }
     
-    if (@abs(det) < 1e-10) return -3; // Singular matrix
+    if (@abs(det) < 1e-10) return -3; // Singular matrix (approximate check)
     
-    return 0; // Success indicator
+    // TODO: Implement full Gauss-Jordan elimination:
+    // 1. Create augmented matrix [A | I]
+    // 2. Forward elimination with partial pivoting
+    // 3. Back substitution
+    // 4. Result is [I | A^-1]
+    
+    return 0; // Success indicator (but output is not actually inverted!)
 }
 
 /// Compute matrix trace (sum of diagonal elements)

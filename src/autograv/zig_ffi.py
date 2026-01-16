@@ -79,10 +79,16 @@ class Matrix(ctypes.Structure):
         return cls(data=data_ptr, rows=arr.shape[0], cols=arr.shape[1])
     
     def to_numpy(self) -> np.ndarray:
-        """Convert Matrix to NumPy array."""
+        """
+        Convert Matrix to NumPy array.
+        
+        Note: Returns a copy for memory safety. The Matrix structure
+        points to external memory that may be deallocated, so we
+        create a copy to ensure the NumPy array owns its data.
+        """
         size = self.rows * self.cols
         arr = np.ctypeslib.as_array(self.data, shape=(self.rows, self.cols))
-        return arr.copy()
+        return arr.copy()  # Copy for memory safety
 
 
 # =============================================================================
