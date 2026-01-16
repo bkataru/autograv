@@ -140,14 +140,51 @@ def christoffel_symbols(coordinates, metric):
 - JAX (CPU-only on Windows, GPU/TPU support on Linux/macOS)
 - NumPy
 
+## Zig Core (Optional)
+
+For maximum performance, `autograv` includes an **optional Zig core** that provides high-performance native implementations of tensor operations.
+
+### Benefits
+
+- **Native Performance**: Compiled code with zero runtime overhead
+- **Cross-Platform**: Single codebase works on Linux, macOS, and Windows
+- **Standalone**: Can be used directly from Zig without Python
+- **FFI Compatible**: Works with Python, JavaScript, Ruby, Julia, and more
+
+### Installation
+
+1. Install Zig (0.11.0+): https://ziglang.org/download/
+2. Build the library:
+   ```bash
+   zig build
+   ```
+3. Test Zig core:
+   ```bash
+   zig build test
+   ```
+4. Try the Python FFI example:
+   ```bash
+   python examples/zig_ffi_example.py
+   ```
+
+The Zig library will be automatically detected and used if available. If not present, autograv falls back to the pure JAX implementation.
+
+See [ZIG_INTEGRATION.md](ZIG_INTEGRATION.md) for details on architecture, FFI usage, and future JAX/XLA integration plans.
+
 ## Future Work
 
-- Add more standard metrics (Kerr, Kerr-Newman, FRW, etc.)
-- Implement Weyl tensor and Weyl invariant
-- Support for JIT compilation with `@jax.jit`
-- GPU/TPU acceleration examples
-- Integration with differential equation solvers
-- Visualization tools for curvature
+- **Zig Core Enhancements**:
+  - Automatic differentiation in Zig for Christoffel symbols
+  - Curvature tensor computations (Riemann, Ricci, Einstein)
+  - JAX/XLA custom operation integration for GPU acceleration
+  - SIMD vectorization and multi-threading optimizations
+- **Additional Metrics**: Schwarzschild, Kerr, Kerr-Newman, FLRW
+- **Analysis Tools**:
+  - Implement Weyl tensor and Weyl invariant
+  - Support for JIT compilation with `@jax.jit`
+  - GPU/TPU acceleration examples
+  - Integration with differential equation solvers
+  - Visualization tools for curvature
 
 ## License
 
