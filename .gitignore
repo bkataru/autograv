@@ -8,3 +8,11 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Zig build artifacts
+zig-cache/
+zig-out/
+*.so
+*.dll
+*.dylib
+.zig-cache/

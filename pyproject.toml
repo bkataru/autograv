@@ -1,7 +1,7 @@
 [project]
 name = "autograv"
 version = "0.1.1"
-description = "Automatic differentiation for numerical relativity using JAX"
+description = "Automatic differentiation for numerical relativity using JAX with optional high-performance Zig core"
 readme = "README.md"
 authors = [
     { name = "Baalateja Kataru", email = "baalateja.k@gmail.com" }
@@ -19,7 +19,10 @@ keywords = [
     "physics",
     "differential-geometry",
     "curvature",
-    "gravity"
+    "gravity",
+    "zig",
+    "ffi",
+    "high-performance"
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
