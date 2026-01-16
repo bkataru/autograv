@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Zig Core Implementation**: High-performance native implementation of core tensor operations
+  - Matrix operations (multiply, transpose, trace, inverse)
+  - Metric tensor functions (Minkowski, spherical polar)
+  - C ABI exports for FFI compatibility
+  - Zig unit tests for all core functions
+- **Python FFI Bindings**: `autograv.zig_ffi` module for accessing Zig library from Python
+  - ctypes-based interface with NumPy integration
+  - Automatic library loading and detection
+  - Graceful fallback to JAX if Zig unavailable
+  - Type-safe wrappers matching Zig C ABI
+- **Build System**: Comprehensive build infrastructure for Zig
+  - `build.zig` configuration for cross-platform compilation
+  - Shell script (`build_zig.sh`) for Linux/macOS
+  - PowerShell script (`build_zig.ps1`) for Windows
+  - Support for debug and release builds
+- **CI/CD**: GitHub Actions workflow for Zig builds
+  - Multi-platform testing (Linux, macOS, Windows)
+  - Multiple Zig versions (0.11.0, 0.12.0)
+  - Cross-compilation verification
+  - Artifact uploads for build outputs
+- **Documentation**:
+  - `src/zig/README.md`: Complete Zig API reference
+  - `ZIG_INTEGRATION.md`: Architecture and integration guide
+  - `DEVELOPMENT.md`: Contributor guide for Zig development
+  - Updated main README with Zig core section
+- **Examples**:
+  - `examples/zig_ffi_example.py`: Demonstrates FFI usage with performance comparison
+
+### Changed
+- Updated package description to mention optional Zig core
+- Added Zig-related keywords to pyproject.toml
+- Updated `.gitignore` to exclude Zig build artifacts
+
+### Technical Details
+- **Architecture**: Hybrid Python/Zig design
+  - JAX for automatic differentiation and GPU/TPU
+  - Zig for performance-critical native operations
+  - Optional Zig core with automatic detection
+- **Compatibility**: Zig library works standalone (no Python required)
+- **Cross-platform**: Single Zig codebase compiles for Linux, macOS, Windows
+- **Future**: Foundation for JAX/XLA custom operation integration
+
 ## [0.1.0] - 2026-01-13
 
 ### Added
